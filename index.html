@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PapGinoz - Delicious Fast Food & Juices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-red: #d32f2f;
+            --dark-red: #b71c1c;
+            --light-red: #ef5350;
+            --text-dark: #333;
+            --text-light: #fff;
+            --bg-light: #f9f9f9;
+            --border-light: #ddd;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--dark-red), var(--primary-red));
+            color: var(--text-light);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+        }
+        
+        .contact-info {
+            text-align: right;
+        }
+        
+        .phone-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .tagline {
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            color: var(--text-light);
+            text-align: center;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .order-btn {
+            display: inline-block;
+            background: var(--primary-red);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .order-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-red);
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary-red);
+        }
+        
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 2rem;
+        }
+        
+        .category-btn {
+            padding: 8px 20px;
+            background: white;
+            border: 2px solid var(--primary-red);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary-red);
+            color: white;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .menu-item-img {
+            height: 200px;
+            background-color: #f5f5f5;
+            background-position: center;
+            background-size: cover;
+        }
+        
+        .menu-item-content {
+            padding: 1.5rem;
+        }
+        
+        .menu-item-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+        
+        .menu-item-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .menu-item-price {
+            font-weight: bold;
+            color: var(--primary-red);
+            font-size: 1.2rem;
+        }
+        
+        .delivery-section {
+            background: linear-gradient(to right, var(--dark-red), var(--primary-red));
+            padding: 4rem 2rem;
+            color: white;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .delivery-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .delivery-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            text-align: left;
+        }
+        
+        .form-group.full {
+            grid-column: 1 / span 2;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: white;
+            color: var(--primary-red);
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: #f0f0f0;
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        
+        .footer-section h3 {
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .footer-section p, .footer-section li {
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section i {
+            margin-right: 10px;
+            color: var(--primary-red);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            color: var(--primary-red);
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #444;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .contact-info {
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .delivery-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full {
+                grid-column: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>PapGinoz</h1>
+            </div>
+            <div class="contact-info">
+                <div class="phone-number">
+                    <i class="fas fa-phone"></i> (123) 456-7890
+                </div>
+                <div class="tagline">Call now to place your order!</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Delicious Fast Food & Refreshing Juices</h2>
+            <p>Experience the best flavors in town delivered right to your doorstep</p>
+            <a href="#delivery" class="order-btn">Order Now</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section class="container">
+        <h2 class="section-title">Our Menu</h2>
+        
+        <div class="menu-categories">
+            <button class="category-btn active">All Items</button>
+            <button class="category-btn">Burgers</button>
+            <button class="category-btn">Pizza</button>
+            <button class="category-btn">Juices</button>
+            <button class="category-btn">Desserts</button>
+        </div>
+        
+        <div class="menu-grid">
+            <!-- Burger Items -->
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1551782450-a2132b4ba21d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Classic Cheeseburger</h3>
+                    <p class="menu-item-desc">Juicy beef patty with cheese, fresh lettuce, tomato, and our special sauce</p>
+                    <div class="menu-item-price">$8.99</div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1561758033-d89a9ad46330?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Bacon Deluxe</h3>
+                    <p class="menu-item-desc">Double beef patty with crispy bacon, cheddar cheese, and barbecue sauce</p>
+                    <div class="menu-item-price">$11.99</div>
+                </div>
+            </div>
+            
+            <!-- Pizza Items -->
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Pepperoni Pizza</h3>
+                    <p class="menu-item-desc">Classic pizza with generous portions of pepperoni and mozzarella cheese</p>
+                    <div class="menu-item-price">$12.99</div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Veggie Supreme</h3>
+                    <p class="menu-item-desc">Loaded with bell peppers, mushrooms, onions, olives, and tomatoes</p>
+                    <div class="menu-item-price">$13.99</div>
+                </div>
+            </div>
+            
+            <!-- Juice Items -->
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1613478223719-2ab802602423?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Tropical Blend</h3>
+                    <p class="menu-item-desc">Refreshing mix of pineapple, mango, and orange with a hint of ginger</p>
+                    <div class="menu-item-price">$5.99</div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1600271886742-f049cd451bba?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Berry Blast</h3>
+                    <p class="menu-item-desc">Antioxidant-rich blend of strawberries, blueberries, and raspberries</p>
+                    <div class="menu-item-price">$6.49</div>
+                </div>
+            </div>
+            
+            <!-- Dessert Items -->
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1499636136210-6f4ee915583e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Chocolate Brownie</h3>
+                    <p class="menu-item-desc">Rich, fudgy chocolate brownie with walnuts, served with ice cream</p>
+                    <div class="menu-item-price">$4.99</div>
+                </div>
+            </div>
+            
+            <div class="menu-item">
+                <div class="menu-item-img" style="background-image: url('https://images.unsplash.com/photo-1483695028939-5bb13f8648b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="menu-item-content">
+                    <h3 class="menu-item-title">Apple Pie</h3>
+                    <p class="menu-item-desc">Homemade apple pie with cinnamon, served warm with vanilla sauce</p>
+                    <div class="menu-item-price">$5.49</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Delivery Section -->
+    <section id="delivery" class="delivery-section">
+        <div class="delivery-container">
+            <h2 class="section-title" style="color: white;">Place Your Order</h2>
+            <p>Call us at <strong>(123) 456-7890</strong> or provide your information below and we'll deliver to you!</p>
+            
+            <form class="delivery-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+                
+                <div class="form-group full">
+                    <label for="address">Delivery Address</label>
+                    <textarea id="address" placeholder="Enter your full address for delivery" required></textarea>
+                </div>
+                
+                <div class="form-group full">
+                    <label for="order">Your Order</label>
+                    <textarea id="order" placeholder="Please list the items you would like to order" required></textarea>
+                </div>
+                
+                <div class="form-group full">
+                    <button type="submit" class="submit-btn">Submit Order Request</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PapGinoz</h3>
+                <p>Serving delicious fast food and refreshing juices since 2023. We take pride in using fresh ingredients and preparing each meal with care.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Food Street, Taste City</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@papginoz.com</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Opening Hours</h3>
+                <p>Monday - Friday: 10am - 10pm</p>
+                <p>Saturday - Sunday: 11am - 11pm</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            &copy; 2023 PapGinoz. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Simple category filtering
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // In a real implementation, this would filter the menu items
+                    // For this example, we'll just show an alert
+                    alert(`Showing ${this.textContent} menu. In a full implementation, this would filter the menu items.`);
+                });
+            });
+            
+            // Form submission
+            const deliveryForm = document.querySelector('.delivery-form');
+            deliveryForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your order! We will call you shortly to confirm.');
+                deliveryForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>
